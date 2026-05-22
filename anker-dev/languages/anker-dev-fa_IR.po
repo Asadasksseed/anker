@@ -1,0 +1,67 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Anker Dev 1.0.0\n"
+"Report-Msgid-Bugs-To: https://shabake.dev/\n"
+"POT-Creation-Date: 2026-05-22 00:00+0000\n"
+"PO-Revision-Date: 2026-05-22 00:00+0000\n"
+"Last-Translator: shabake.dev\n"
+"Language-Team: Persian <fa@li.org>\n"
+"Language: fa_IR\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: hand-written\n"
+"X-Domain: anker-dev\n"
+
+# Source strings already in Persian — translation file is provided for tooling
+# compatibility (e.g. translation editors) and identical pass-through.
+
+msgid "انکر دِو"
+msgstr "انکر دِو"
+
+msgid "ویژگی‌ها"
+msgstr "ویژگی‌ها"
+
+msgid "تنظیمات"
+msgstr "تنظیمات"
+
+msgid "ذخیرهٔ تغییرات"
+msgstr "ذخیرهٔ تغییرات"
+
+msgid "فعال"
+msgstr "فعال"
+
+msgid "غیرفعال"
+msgstr "غیرفعال"
+
+msgid "وضعیت ویژگی"
+msgstr "وضعیت ویژگی"
+
+msgid "فعال‌سازی این ویژگی"
+msgstr "فعال‌سازی این ویژگی"
+
+msgid "مدت زمان (دقیقه)"
+msgstr "مدت زمان (دقیقه)"
+
+msgid "افزونهٔ Anker Dev مجموعه‌ای از ویژگی‌های توسعه‌دهنده برای ووکامرس را در اختیار شما قرار می‌دهد. در این صفحه می‌توانید هر ویژگی را به‌صورت مستقل فعال یا غیرفعال کنید و تنظیمات آن را تغییر دهید."
+msgstr "افزونهٔ Anker Dev مجموعه‌ای از ویژگی‌های توسعه‌دهنده برای ووکامرس را در اختیار شما قرار می‌دهد. در این صفحه می‌توانید هر ویژگی را به‌صورت مستقل فعال یا غیرفعال کنید و تنظیمات آن را تغییر دهید."
+
+msgid "در حال حاضر هیچ ویژگی‌ای ثبت نشده است."
+msgstr "در حال حاضر هیچ ویژگی‌ای ثبت نشده است."
+
+msgid "افزونهٔ Anker Dev برای کار به ووکامرس نیاز دارد. لطفاً ابتدا ووکامرس را نصب و فعال کنید."
+msgstr "افزونهٔ Anker Dev برای کار به ووکامرس نیاز دارد. لطفاً ابتدا ووکامرس را نصب و فعال کنید."
+
+msgid "لغو خودکار سفارش‌های پرداخت‌نشده"
+msgstr "لغو خودکار سفارش‌های پرداخت‌نشده"
+
+msgid "اگر سفارشی در ووکامرس ثبت شود و در وضعیت «در انتظار پرداخت» باقی بماند، پس از مدت زمان مشخص‌شده به‌صورت خودکار لغو خواهد شد."
+msgstr "اگر سفارشی در ووکامرس ثبت شود و در وضعیت «در انتظار پرداخت» باقی بماند، پس از مدت زمان مشخص‌شده به‌صورت خودکار لغو خواهد شد."
+
+#. translators: 1: min minutes, 2: max minutes
+msgid "مقدار مجاز بین %1$s تا %2$s دقیقه است. مقدار پیش‌فرض ۱۵ دقیقه است."
+msgstr "مقدار مجاز بین %1$s تا %2$s دقیقه است. مقدار پیش‌فرض ۱۵ دقیقه است."
+
+#. translators: %s: number of minutes
+msgid "سفارش به دلیل عدم پرداخت در مهلت %s دقیقه‌ای، توسط افزونهٔ Anker Dev به‌صورت خودکار لغو شد."
+msgstr "سفارش به دلیل عدم پرداخت در مهلت %s دقیقه‌ای، توسط افزونهٔ Anker Dev به‌صورت خودکار لغو شد."
