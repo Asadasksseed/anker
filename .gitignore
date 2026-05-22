@@ -1,0 +1,14 @@
+# OS / editor
+.DS_Store
+Thumbs.db
+*.swp
+*~
+.idea/
+.vscode/
+
+# Build artefacts
+*.zip
+*.log
+
+# Composer (not used yet)
+vendor/
