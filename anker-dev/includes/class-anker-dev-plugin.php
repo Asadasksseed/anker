@@ -56,6 +56,10 @@ class Anker_Dev_Plugin {
 		// Register built-in features. Third parties can hook in too.
 		$this->register_default_features();
 
+		// Persistence hooks must always run, regardless of admin context, so
+		// `anker_dev_settings_updated` fires whenever the option changes.
+		Anker_Dev_Settings::attach_persistence_hooks();
+
 		/**
 		 * Fires after the default features have been registered, allowing third
 		 * parties to add their own Anker_Dev_Feature subclasses via:
@@ -74,11 +78,11 @@ class Anker_Dev_Plugin {
 			return;
 		}
 
-		// Wire up runtime hooks for every enabled feature.
+		// Wire up runtime hooks for every registered feature. Each feature's
+		// handlers self-check `is_enabled()` so that any previously-scheduled
+		// Action Scheduler actions don't error out when the feature is disabled.
 		foreach ( $this->features as $feature ) {
-			if ( $feature->is_enabled() ) {
-				$feature->init_hooks();
-			}
+			$feature->init_hooks();
 		}
 
 		// Boot admin UI.

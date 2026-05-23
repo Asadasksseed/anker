@@ -65,3 +65,90 @@ msgstr "مقدار مجاز بین %1$s تا %2$s دقیقه است. مقدار 
 #. translators: %s: number of minutes
 msgid "سفارش به دلیل عدم پرداخت در مهلت %s دقیقه‌ای، توسط افزونهٔ Anker Dev به‌صورت خودکار لغو شد."
 msgstr "سفارش به دلیل عدم پرداخت در مهلت %s دقیقه‌ای، توسط افزونهٔ Anker Dev به‌صورت خودکار لغو شد."
+
+
+
+# v1.1 strings (diagnostics + manual sweep).
+
+msgid "وضعیت و عیب‌یابی"
+msgstr "وضعیت و عیب‌یابی"
+
+#. translators: %s: minutes
+msgid "%s دقیقه"
+msgstr "%s دقیقه"
+
+msgid "مدت زمان فعلی"
+msgstr "مدت زمان فعلی"
+
+msgid "سفارش‌های در انتظار پرداخت"
+msgstr "سفارش‌های در انتظار پرداخت"
+
+msgid "سفارش‌های قدیمی‌تر از مهلت (آمادهٔ لغو)"
+msgstr "سفارش‌های قدیمی‌تر از مهلت (آمادهٔ لغو)"
+
+msgid "نیاز به اجرا"
+msgstr "نیاز به اجرا"
+
+msgid "قدیمی‌ترین سفارش در انتظار پرداخت"
+msgstr "قدیمی‌ترین سفارش در انتظار پرداخت"
+
+msgid "وضعیت Action Scheduler"
+msgstr "وضعیت Action Scheduler"
+
+msgid "در دسترس"
+msgstr "در دسترس"
+
+msgid "در دسترس نیست"
+msgstr "در دسترس نیست"
+
+msgid "وضعیت WP-Cron"
+msgstr "وضعیت WP-Cron"
+
+msgid "غیرفعال (DISABLE_WP_CRON)"
+msgstr "غیرفعال (DISABLE_WP_CRON)"
+
+msgid "نگران نباشید: حتی بدون WP-Cron هم بررسی fallback روی هر بازدید از سایت انجام می‌شود."
+msgstr "نگران نباشید: حتی بدون WP-Cron هم بررسی fallback روی هر بازدید از سایت انجام می‌شود."
+
+msgid "تعداد action‌های زمان‌بندی‌شدهٔ تک‌سفارشی"
+msgstr "تعداد action‌های زمان‌بندی‌شدهٔ تک‌سفارشی"
+
+msgid "اجرای بعدی sweep زمان‌بندی‌شده"
+msgstr "اجرای بعدی sweep زمان‌بندی‌شده"
+
+msgid "هنوز زمان‌بندی نشده"
+msgstr "هنوز زمان‌بندی نشده"
+
+msgid "آخرین اجرای sweep"
+msgstr "آخرین اجرای sweep"
+
+#. translators: 1: source tag, 2: scanned count, 3: cancelled count
+msgid "منبع: %1$s، بررسی‌شده: %2$s، لغوشده: %3$s"
+msgstr "منبع: %1$s، بررسی‌شده: %2$s، لغوشده: %3$s"
+
+msgid "هرگز اجرا نشده"
+msgstr "هرگز اجرا نشده"
+
+msgid "اجرای فوری بررسی سفارش‌های قدیمی"
+msgstr "اجرای فوری بررسی سفارش‌های قدیمی"
+
+msgid "مشاهدهٔ صف Action Scheduler"
+msgstr "مشاهدهٔ صف Action Scheduler"
+
+#. translators: 1: scanned count, 2: cancelled count
+msgid "بررسی فوری انجام شد. %1$s سفارش بررسی شد و %2$s سفارش لغو گردید."
+msgstr "بررسی فوری انجام شد. %1$s سفارش بررسی شد و %2$s سفارش لغو گردید."
+
+#. translators: %s: human readable time difference like "5 mins"
+msgid "%s پیش"
+msgstr "%s پیش"
+
+#. translators: %s: human readable time difference like "5 mins"
+msgid "در %s آینده"
+msgstr "در %s آینده"
+
+msgid "به زودی"
+msgstr "به زودی"
+
+msgid "افزونهٔ Anker Dev مجموعه‌ای از ویژگی‌های توسعه‌دهنده برای ووکامرس را در اختیار شما قرار می‌دهد. در این صفحه می‌توانید هر ویژگی را به‌صورت مستقل فعال یا غیرفعال کنید، تنظیمات آن را تغییر دهید و وضعیت اجرای آن را ببینید."
+msgstr "افزونهٔ Anker Dev مجموعه‌ای از ویژگی‌های توسعه‌دهنده برای ووکامرس را در اختیار شما قرار می‌دهد. در این صفحه می‌توانید هر ویژگی را به‌صورت مستقل فعال یا غیرفعال کنید، تنظیمات آن را تغییر دهید و وضعیت اجرای آن را ببینید."
