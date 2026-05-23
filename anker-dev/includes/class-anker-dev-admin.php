@@ -33,11 +33,19 @@ class Anker_Dev_Admin {
 	private $hook_suffix = '';
 
 	/**
+	 * Notice queue rendered at the top of the page (after a manual action).
+	 *
+	 * @var array<int, array{type:string,message:string}>
+	 */
+	private $notices = array();
+
+	/**
 	 * Boot the admin layer.
 	 */
 	public function init() {
 		add_action( 'admin_menu', array( $this, 'register_menu' ) );
 		add_action( 'admin_init', array( $this, 'register_settings' ) );
+		add_action( 'admin_init', array( $this, 'maybe_handle_action' ) );
 		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_assets' ) );
 		add_filter( 'plugin_action_links_' . ANKER_DEV_BASENAME, array( $this, 'plugin_action_links' ) );
 	}
@@ -72,6 +80,61 @@ class Anker_Dev_Admin {
 	 */
 	public function register_settings() {
 		Anker_Dev_Settings::register();
+	}
+
+	/**
+	 * Handle one-shot admin actions triggered from the features page (e.g. "Run now").
+	 *
+	 * @return void
+	 */
+	public function maybe_handle_action() {
+		if ( empty( $_GET['anker_dev_action'] ) || empty( $_GET['anker_dev_feature'] ) ) {
+			return;
+		}
+
+		if ( ! is_admin() || ! current_user_can( self::CAPABILITY ) ) {
+			return;
+		}
+
+		$action     = sanitize_key( wp_unslash( $_GET['anker_dev_action'] ) );
+		$feature_id = sanitize_key( wp_unslash( $_GET['anker_dev_feature'] ) );
+
+		if ( 'run_sweep' !== $action ) {
+			return;
+		}
+
+		check_admin_referer( 'anker_dev_run_sweep_' . $feature_id );
+
+		$feature = Anker_Dev_Plugin::instance()->get_feature( $feature_id );
+		if ( ! $feature instanceof Anker_Dev_Cancel_Pending_Orders ) {
+			return;
+		}
+
+		$stats = $feature->run_manual_sweep();
+
+		// Build a notice and redirect back to the page (PRG pattern).
+		$notice_msg = sprintf(
+			/* translators: 1: scanned count, 2: cancelled count */
+			__( 'بررسی فوری انجام شد. %1$s سفارش بررسی شد و %2$s سفارش لغو گردید.', 'anker-dev' ),
+			number_format_i18n( isset( $stats['scanned'] ) ? (int) $stats['scanned'] : 0 ),
+			number_format_i18n( isset( $stats['cancelled'] ) ? (int) $stats['cancelled'] : 0 )
+		);
+
+		$redirect = add_query_arg(
+			array(
+				'page'                  => self::PAGE_SLUG,
+				'anker_dev_notice'      => 'sweep_done',
+				'anker_dev_scanned'     => isset( $stats['scanned'] ) ? (int) $stats['scanned'] : 0,
+				'anker_dev_cancelled'   => isset( $stats['cancelled'] ) ? (int) $stats['cancelled'] : 0,
+			),
+			admin_url( 'admin.php' )
+		);
+
+		// Stash the formatted message in a transient so we don't need to rebuild it after redirect.
+		set_transient( 'anker_dev_admin_notice_' . get_current_user_id(), $notice_msg, 30 );
+
+		wp_safe_redirect( $redirect );
+		exit;
 	}
 
 	/**
@@ -114,14 +177,27 @@ class Anker_Dev_Admin {
 		}
 
 		$features = Anker_Dev_Plugin::instance()->get_features();
+
+		// Render any one-shot notice from the most recent admin action.
+		$notice_key = 'anker_dev_admin_notice_' . get_current_user_id();
+		$msg        = get_transient( $notice_key );
+		if ( $msg ) {
+			delete_transient( $notice_key );
+		}
 		?>
 		<div class="wrap anker-dev-wrap">
 			<h1 class="wp-heading-inline"><?php esc_html_e( 'انکر دِو', 'anker-dev' ); ?></h1>
 			<hr class="wp-header-end" />
 
 			<p class="description anker-dev-intro">
-				<?php esc_html_e( 'افزونهٔ Anker Dev مجموعه‌ای از ویژگی‌های توسعه‌دهنده برای ووکامرس را در اختیار شما قرار می‌دهد. در این صفحه می‌توانید هر ویژگی را به‌صورت مستقل فعال یا غیرفعال کنید و تنظیمات آن را تغییر دهید.', 'anker-dev' ); ?>
+				<?php esc_html_e( 'افزونهٔ Anker Dev مجموعه‌ای از ویژگی‌های توسعه‌دهنده برای ووکامرس را در اختیار شما قرار می‌دهد. در این صفحه می‌توانید هر ویژگی را به‌صورت مستقل فعال یا غیرفعال کنید، تنظیمات آن را تغییر دهید و وضعیت اجرای آن را ببینید.', 'anker-dev' ); ?>
 			</p>
+
+			<?php if ( $msg ) : ?>
+				<div class="notice notice-success is-dismissible">
+					<p><?php echo esc_html( $msg ); ?></p>
+				</div>
+			<?php endif; ?>
 
 			<?php settings_errors( Anker_Dev_Settings::OPTION_NAME ); ?>
 
@@ -192,6 +268,8 @@ class Anker_Dev_Admin {
 					<?php $feature->render_fields(); ?>
 				</tbody>
 			</table>
+
+			<?php $feature->render_diagnostics(); ?>
 		</div>
 		<?php
 	}

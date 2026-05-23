@@ -135,19 +135,49 @@ class Anker_Dev_Settings {
 
 		self::flush_cache();
 
-		/**
-		 * After settings are sanitized but before they are stored, allow features
-		 * to react (e.g. clear or reschedule background actions).
-		 *
-		 * @param array $output The sanitized settings array.
-		 */
-		do_action( 'anker_dev_settings_updated', $output );
-
 		return $output;
 	}
 
 	/**
+	 * Listener wired to `update_option_<OPTION_NAME>` so we can fire our
+	 * own `anker_dev_settings_updated` action AFTER the option is persisted
+	 * (not during sanitization, when the DB still holds the old value).
+	 *
+	 * @param mixed $old_value Previous value.
+	 * @param mixed $new_value New value.
+	 * @return void
+	 */
+	public static function on_option_updated( $old_value, $new_value ) {
+		unset( $old_value );
+		self::flush_cache();
+		/**
+		 * Fires after the Anker Dev settings have been persisted.
+		 *
+		 * @param array $new_value The newly persisted settings array.
+		 */
+		do_action( 'anker_dev_settings_updated', is_array( $new_value ) ? $new_value : array() );
+	}
+
+	/**
+	 * Listener wired to `add_option_<OPTION_NAME>` to handle the very first save.
+	 *
+	 * @param string $option    Option name.
+	 * @param mixed  $new_value Newly added value.
+	 * @return void
+	 */
+	public static function on_option_added( $option, $new_value ) {
+		unset( $option );
+		self::flush_cache();
+		do_action( 'anker_dev_settings_updated', is_array( $new_value ) ? $new_value : array() );
+	}
+
+	/**
 	 * Register the option with the Settings API.
+	 *
+	 * Only the `register_setting()` call belongs here, since it is only useful
+	 * during admin requests. The `update_option_*` listeners are wired up once
+	 * during plugin boot via `attach_persistence_hooks()` so they fire even when
+	 * the option is updated from a non-admin context.
 	 */
 	public static function register() {
 		register_setting(
@@ -160,5 +190,16 @@ class Anker_Dev_Settings {
 				'show_in_rest'      => false,
 			)
 		);
+	}
+
+	/**
+	 * Wire the `update_option_*` and `add_option_*` listeners. Must be called
+	 * once during plugin boot, regardless of whether we are in admin context.
+	 *
+	 * @return void
+	 */
+	public static function attach_persistence_hooks() {
+		add_action( 'update_option_' . self::OPTION_NAME, array( __CLASS__, 'on_option_updated' ), 10, 2 );
+		add_action( 'add_option_' . self::OPTION_NAME, array( __CLASS__, 'on_option_added' ), 10, 2 );
 	}
 }

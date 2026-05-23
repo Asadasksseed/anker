@@ -77,6 +77,16 @@ abstract class Anker_Dev_Feature {
 	}
 
 	/**
+	 * Render an optional diagnostics / status block for the feature, shown
+	 * after the form table inside the feature card.
+	 *
+	 * @return void
+	 */
+	public function render_diagnostics() {
+		// Default implementation: no diagnostics block.
+	}
+
+	/**
 	 * Wire up the feature's runtime hooks. Only called when the feature is enabled.
 	 *
 	 * @return void

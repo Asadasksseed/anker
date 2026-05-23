@@ -71,3 +71,25 @@
 	align-items: center;
 	gap: 8px;
 }
+
+
+.anker-dev-diag-title {
+	margin: 22px 0 8px;
+	font-size: 14px;
+	font-weight: 600;
+}
+
+.anker-dev-diag-table {
+	max-width: 100%;
+	margin-bottom: 12px;
+}
+
+.anker-dev-diag-table th {
+	width: 38%;
+	font-weight: 600;
+	color: #1d2327;
+}
+
+.anker-dev-diag-actions {
+	margin: 8px 0 16px;
+}
