@@ -3,7 +3,7 @@
  * Plugin Name: Anker Dev
  * Plugin URI:  https://shabake.dev/
  * Description: مجموعه‌ای از ویژگی‌های توسعه‌دهنده برای ووکامرس. در نسخهٔ فعلی شامل لغو خودکار سفارش‌های پرداخت‌نشده پس از مدت زمان مشخص است.
- * Version:     1.1.0
+ * Version:     1.1.1
  * Author:      shabake.dev
  * Author URI:  https://shabake.dev/
  * Text Domain: anker-dev
@@ -22,7 +22,7 @@ if ( defined( 'ANKER_DEV_VERSION' ) ) {
 	return;
 }
 
-define( 'ANKER_DEV_VERSION', '1.1.0' );
+define( 'ANKER_DEV_VERSION', '1.1.1' );
 define( 'ANKER_DEV_FILE', __FILE__ );
 define( 'ANKER_DEV_PATH', plugin_dir_path( __FILE__ ) );
 define( 'ANKER_DEV_URL', plugin_dir_url( __FILE__ ) );

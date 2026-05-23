@@ -484,11 +484,18 @@ class Anker_Dev_Cancel_Pending_Orders extends Anker_Dev_Feature {
 
 		$minutes = $this->get_minutes();
 		$cutoff  = time() - ( $minutes * MINUTE_IN_SECONDS );
-		$orders  = wc_get_orders(
+		// IMPORTANT: pass the cutoff as a numeric UTC timestamp, not as a
+		// formatted string. Per WC's `wc_get_orders` contract, non-numeric
+		// `date_created` strings are interpreted as LOCAL time AND have their
+		// time portion stripped (only YYYY-MM-DD is honored), which silently
+		// rounds the cutoff down to local-midnight-as-UTC and misses orders
+		// that are old in minutes/hours but younger than ~1 day. Passing an
+		// integer keeps full second precision in UTC.
+		$orders = wc_get_orders(
 			array(
 				'limit'        => self::SWEEP_BATCH_SIZE,
 				'status'       => array( 'pending' ),
-				'date_created' => '<' . gmdate( 'Y-m-d H:i:s', $cutoff ),
+				'date_created' => '<' . (int) $cutoff,
 				'return'       => 'objects',
 				'orderby'      => 'date',
 				'order'        => 'ASC',
@@ -549,11 +556,12 @@ class Anker_Dev_Cancel_Pending_Orders extends Anker_Dev_Feature {
 		}
 
 		if ( $can_query_orders ) {
+			// See note in run_sweep(): pass a numeric UTC timestamp, not a string.
 			$overdue_ids = wc_get_orders(
 				array(
 					'limit'        => -1,
 					'status'       => array( 'pending' ),
-					'date_created' => '<' . gmdate( 'Y-m-d H:i:s', $cutoff ),
+					'date_created' => '<' . (int) $cutoff,
 					'return'       => 'ids',
 					'paginate'     => false,
 				)

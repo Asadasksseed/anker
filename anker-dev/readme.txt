@@ -6,7 +6,7 @@ Tested up to: 6.8
 Requires PHP: 7.4
 WC requires at least: 8.0
 WC tested up to: 10.7
-Stable tag: 1.1.0
+Stable tag: 1.1.1
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -50,6 +50,9 @@ License URI: https://www.gnu.org/licenses/gpl-2.0.html
 خیر. مکانیزم لغو در این افزونه کاملاً مستقل از گزینهٔ `woocommerce_hold_stock_minutes` ووکامرس عمل می‌کند.
 
 == Changelog ==
+
+= 1.1.1 =
+* اصلاح حیاتی: کوئری sweep و عیب‌یابی روی سایت‌هایی که منطقهٔ زمانی غیر-UTC دارند (مانند `Asia/Tehran`) سفارش‌های قدیمی را پیدا نمی‌کرد. `wc_get_orders` رشتهٔ غیرعددی `date_created` را به‌عنوان زمان محلی تفسیر می‌کند و فقط بخش `YYYY-MM-DD` آن را نگه می‌دارد، در نتیجه cutoff از «۱۵ دقیقه پیش» به‌اشتباه به نیمه‌شب همان روز محلی-تبدیل-شده-به-UTC تبدیل می‌شد و سفارش‌های قدیمی‌تر از مهلت ولی جوان‌تر از یک شبانه‌روز را نادیده می‌گرفت. حالا cutoff به‌صورت timestamp عددی UTC پاس داده می‌شود (دقت ثانیه، مستقل از منطقهٔ زمانی).
 
 = 1.1.0 =
 * اصلاح اساسی: لغو خودکار سفارش‌های پرداخت‌نشده اکنون مستقل از WP-Cron هم کار می‌کند.
